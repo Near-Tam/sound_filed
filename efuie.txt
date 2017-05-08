@@ -1,0 +1,30 @@
+/*¶©»úÆ±*/
+		try
+		{
+			String Answer = "";
+			JSONObject json_txt = new JSONObject(result_zhiyuan);
+			JSONObject session_dict = json_txt.getJSONObject("session");
+			JSONObject BALT_dict = session_dict.getJSONObject("BALT");
+			Answer = json_txt.getString("Answer");
+			CompoundData data = new CompoundData();
+			data.compoundStr = Answer;
+			data.listener = new ProcessListener() {
+				@Override
+				public void onFinish(int code) {
+					// TODO Auto-generated method stub
+					sendMessageFinish(code);
+				}
+
+                @Override
+                public void onReady(int code) {
+                    // TODO Auto-generated method stub
+                    
+                }
+			};
+			DadianDataPoster.getInstance().upload(mMessage, mService, result);
+			ActionManager.getInstance().handle(ActionManager.ACTION_COMPOUND_WITH_CALLBACK, data);
+			
+			Log.i(TAG,"json_test:"+BALT_dict);
+		}
+		catch (JSONException e){Log.i(TAG,"json_test:False "+e); e.printStackTrace();}
+		/*¶©»úÆ±*/ 
